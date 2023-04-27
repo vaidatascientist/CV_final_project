@@ -70,13 +70,12 @@ def main(args):
                 img = img.cuda()
                 gt_map = gt_map.type(torch.FloatTensor).cuda()
 
-                # train the model
+            
             pred_map = model(img)
             pred_map = pred_map.cpu().detach().numpy()
             gt_map = gt_map.cpu().detach().numpy()
             # evaluation over the batch
             for i_img in range(pred_map.shape[0]):
-                #print(gt_map.shape)
                 pred_cnt = np.sum(pred_map[i_img], (1, 2)) / args.log_para
                 gt_count = np.sum(gt_map[i_img], (1, 2))
                 mae = abs(gt_count - pred_cnt)

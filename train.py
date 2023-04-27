@@ -1,4 +1,3 @@
-# =============================================================================
 import os
 import numpy as np
 import torch
@@ -11,9 +10,6 @@ import matplotlib.pyplot as plt
 import csv
 
 warnings.filterwarnings('ignore')
-
-# define the GPU id to be used
-os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 
 def get_args_parser():
     # define the argparse for the script
@@ -53,9 +49,7 @@ def main(args):
 
     with torch.no_grad():
         torch.cuda.empty_cache()
-        
-    #TODO add validation data loader
-    #train_loader, val_loader = prepare_dataset(args)
+
     train_loader, val_loader = prepare_dataset(args)
     
     model = SASNet(args=args).cuda()

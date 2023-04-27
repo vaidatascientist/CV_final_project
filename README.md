@@ -11,5 +11,15 @@ python prepare_dataset.py --data_path ./datas/part_B_final
 ```
 
 Run the following command to train the model:
+```
+python3 train.py --data_path [data path] 
+```
+Run the following command to do transfer learning on the model
+```
+python3 transfer.py --data_path [data path] --model_path [model path]
+```
 
-python3 train.py --data_path ./datas/part_A_final 
+Run the following command to do inference:
+```
+python3 test.py --data_path [data path] --model_path [model path]
+```

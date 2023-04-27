@@ -53,7 +53,8 @@ def main(args):
     train_loader, val_loader = prepare_dataset(args)
     
     model = SASNet(args=args).cuda()
-    #model.load_state_dict(torch.load(args.model_path))
+    
+    #set the training parameter
     optimizer = torch.optim.AdamW(model.parameters(), lr=1e-5, weight_decay=1e-4)
     criterion = torch.nn.MSELoss()
     scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=1, gamma=0.99)
@@ -73,16 +74,13 @@ def main(args):
         maes = AverageMeter()
         mses = AverageMeter()
         # iterate over the dataset
-        # print("start traininig")
         for vi, data in enumerate(train_loader):
             img, gt_map = data
-            # if vi%5 == 0:
-            #     print(vi)
             if torch.cuda.is_available():
                 img = img.cuda()
                 gt_map = gt_map.type(torch.FloatTensor).cuda()
 
-                # train the model
+            # train the model
             optimizer.zero_grad()
             pred_map = model(img)
 
@@ -115,13 +113,11 @@ def main(args):
         #validation loop        
         val_maes = AverageMeter()
         val_mses = AverageMeter()
-        # print("start validataion loop")
+
         model.eval()
         with torch.no_grad():
             for i, v_data in enumerate(val_loader):
                 v_img, v_gt_map = v_data
-                # if vi%5 == 0:
-                #     print(vi)
                 if torch.cuda.is_available():
                     v_img = v_img.cuda()
                     #gt_map = gt_map.type(torch.FloatTensor).cuda()
@@ -147,6 +143,7 @@ def main(args):
         val_mse_epoch.append(val_mse)
         model.train()
         
+        #save the parameter for the lowest mae score for validation dataset
         if val_mae < best_val_mae:
             best_val_mae = val_mae
             torch.save(model.state_dict(), 'models/train_modelB_bestVal_lr2e5.pth')
@@ -168,6 +165,7 @@ def main(args):
         print('    ' + '-' * 20)
     torch.save(model.state_dict(), 'models/train_modelB_Val_lr2e5.pth')
     
+    #saving traning and validation mase and mae
     with open('result_transfer/lr2e-5/modelB_maes_epoch.csv','w') as new_file:
         write=csv.writer(new_file)
         write.writerows(map(lambda x: [x], mae_epoch))

@@ -15,7 +15,11 @@ Run the following command to train the model:
 ```
 python3 train.py --data_path [data path] 
 ```
-Run the following command to do transfer learning on the model
+Run the following command to do transfer learning on the model if you want train and validataion split:
+```
+python3 train.py --data_path [data path] --
+
+Run the following command to do transfer learning on the model if you do not want validataion data
 ```
 python3 transfer.py --data_path [data path] --model_path [model path]
 ```

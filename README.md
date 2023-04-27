@@ -17,7 +17,7 @@ python prepare_dataset.py --data_path ./datas/part_B_final
 
 ## Testing
  
-##Transfer Learning
+## Transfer Learning
 
 ## The network
 The overall architecture of the proposed SASNet mainly consists of three components: U-shape backbone, confidence branch and density branch.

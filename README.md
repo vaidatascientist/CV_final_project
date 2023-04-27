@@ -9,3 +9,7 @@ Generating the density maps for the data:
 python prepare_dataset.py --data_path ./datas/part_A_final
 python prepare_dataset.py --data_path ./datas/part_B_final
 ```
+
+Run the following command to train the model:
+
+python3 train.py --data_path ./datas/part_A_final 

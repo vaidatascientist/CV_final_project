@@ -149,7 +149,7 @@ def main(args):
             torch.save(model.state_dict(), 'models/train_modelB_bestVal_lr2e5.pth')
             saved = True
 
-            result = {'loss': loss,
+            result = {
                       'train_mae': train_mae,
                       'train_mse': train_mse,
                       'val_mae': val_mae,
